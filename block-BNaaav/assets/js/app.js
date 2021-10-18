@@ -10,20 +10,19 @@ function handleRequest(req, res) {
   if (req.url === '/') {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream('../../index.html').pipe(res);
-  }
+  };
   if (req.url === '/about') {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     fs.createReadStream('../../about.html').pipe(res);
-  }
+  };
    if (req.url.split('.').pop() === 'css') {
-     // set header for css file
      res.setHeader('Content-Type', 'text/css');
-     // read css file and send it in response
-     fs.readFile('./assets/stylesheets/' + req.url, (err, content) => {
-       if (err) return console.log(err);
-       res.end(content);
-     });
-   }
+     fs.createReadStream('../stylesheets/style.css').pipe(res);
+  };
+  if (req.url.split('.').pop() === 'png') {
+    res.setHeader('Content-Type', 'text/image');
+    fs.createReadStream('../images/img1.png').pipe(res);
+  }
 }
 
 server.listen(3002, () => {
